@@ -17,7 +17,7 @@ $(function(){
 
   startIdle();
 })
-$(window).on("load", function(){
+$(window).on('load', function(){
   //Setup wrapper height relative to container, to prevent info container to introduce empty space at the bottom of the container
   $('#container-wrapper').height($('#container').outerHeight(true));
 })
@@ -30,10 +30,10 @@ audio.addEventListener('loadeddata', function(){
     audioLoaded = true;
     if (ghostAnimationFinished && !ghostDistortStarted){
       ghostDistortStarted = true;
-      distortGhost(document.getElementById("ghost"), function(){
+      distortGhost(document.getElementById('ghost'), function(){
         startDrawing(20); //brain alpha waves are 10 pulses per second. Draw double the speed to change bg every half cycle
         audio.volume = 1;
-        state = "playing";
+        state = 'playing';
         animationTransition = false;
       });
 
@@ -42,33 +42,33 @@ audio.addEventListener('loadeddata', function(){
 
 var infoVisible = false;
 var infoAnimating = false;
-$("#info-button").on("click", function(){
+$('#info-button').on('click', function(){
   infoAnimating = true;
 
-  $("#info-section").css("background-color", "#686867");
-  $("#container > .main").css("visibility", "visible");
+  $('#info-section').css('background-color', '#686867');
+  $('#container > .main').css('visibility', 'visible');
 
   if (infoVisible){
-    var newHeight = "20px";
+    var newHeight = '20px';
     var newY = 0;
   }else{
-    var newHeight = $("#container").height();
-    var newY = - $("#container").height();
+    var newHeight = $('#container').height();
+    var newY = - $('#container').height();
   }
-  $("#info-section").transit({
+  $('#info-section').transit({
     height: newHeight,
     y: newY
   }, fadingTime, function(){
     infoAnimating = false;
     infoVisible = !infoVisible;
     if (infoVisible){
-      $("#info-button").text("CLOSE");
-      $("#info-section").css("background-color", "rgb(0,0,0,0)");
-      $("#container > .main").css("visibility", "hidden");
+      $('#info-button').text('CLOSE');
+      $('#info-section').css('background-color', 'rgb(0,0,0,0)');
+      $('#container > .main').css('visibility', 'hidden');
     }
     else {
-      $("#info-button").text("INFO");
-      $("#info-section").css("background-color", "rgb(0,0,0,0)");
+      $('#info-button').text('INFO');
+      $('#info-section').css('background-color', 'rgb(0,0,0,0)');
     }
   })
 });
@@ -78,7 +78,7 @@ var animationTransition = false;
 $(document).click(function(event) {
   if(!infoAnimating && !$(event.target).closest('#info-button').length && !$(event.target).closest('a').length && !animationTransition) {
     animationTransition = true;
-    if (state == "idle"){
+    if (state == 'idle'){
       audio.src = 'Atto3.mp3';
       audio.play();
 
@@ -87,9 +87,9 @@ $(document).click(function(event) {
       }else{
         idleToPlay()
       }
-    }else if (state == "playing"){
+    }else if (state == 'playing'){
       playToPause();
-    }else if (state == "pause"){
+    }else if (state == 'pause'){
       pauseToPlay();
     }
   }
@@ -102,7 +102,7 @@ function setupAudio(){
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
   audio = new Audio();
-  audio.crossOrigin = "anonymous";
+  audio.crossOrigin = 'anonymous';
   source = audioCtx.createMediaElementSource(audio);
 
   analyser = audioCtx.createAnalyser();
@@ -136,7 +136,7 @@ function draw() {
 
   requestAnimationFrame(draw);
 
-  if (state == "pause") return;
+  if (state == 'pause') return;
 
   if (debug) drawSpectrum();
 
@@ -155,7 +155,7 @@ function drawBackground(){
    var rmsScaled = Math.min(Math.max(rms, minRMS), maxRMS);
    rmsScaled = (rmsScaled - minRMS)/(maxRMS - minRMS)
 
-   if (debug) console.log("RMS scaled: "+rmsScaled+" - raw: "+rms);
+   if (debug) console.log('RMS scaled: '+rmsScaled+' - raw: '+rms);
    var rmsColor = Math.floor(rmsScaled*255);
 
    if (colorState){
@@ -164,7 +164,7 @@ function drawBackground(){
      $body.css('backgroundColor', currentColor);
    }else{
      var $body = $('body');
-     $body.css('backgroundColor', "black");
+     $body.css('backgroundColor', 'black');
    }
    colorState = !colorState;
 
@@ -173,68 +173,68 @@ function drawBackground(){
 
 //--------- Utility functions ----------//
 function resetInfoSection(){
-  var newHeight = "20px";
+  var newHeight = '20px';
   var newY = 0;
   infoVisible = false;
-  $("#container > .main").css("visibility", "visible");
-  $("#info-button").text("INFO");
-  $("#info-section").css("background-color", "rgb(0,0,0,0)");
-  $("#info-section").transit({
+  $('#container > .main').css('visibility', 'visible');
+  $('#info-button').text('INFO');
+  $('#info-section').css('background-color', 'rgb(0,0,0,0)');
+  $('#info-section').transit({
     height: newHeight,
     y: newY}, 50);
 }
 
 function hideInfoSection(callback){
   infoAnimating = true;
-  var newHeight = "20px";
+  var newHeight = '20px';
   var newY = 0;
-  $("#info-section").css("background-color", "#686867");
-  $("#container > .main").css("visibility", "visible");
-  $("#info-section").transit({
+  $('#info-section').css('background-color', '#686867');
+  $('#container > .main').css('visibility', 'visible');
+  $('#info-section').transit({
     height: newHeight,
     y: newY}, fadingTime, function(){
       infoAnimating = false;
       infoVisible = !infoVisible;
-      $("#info-button").text("INFO");
-      $("#info-section").css("background-color", "rgb(0,0,0,0)");
+      $('#info-button').text('INFO');
+      $('#info-section').css('background-color', 'rgb(0,0,0,0)');
       callback();
     });
 }
 
 function startIdle(){
   animationTransition = true;
-  $(".info").delay(1000).animate({
+  $('.info').delay(1000).animate({
     opacity: 1
   }, fadingTime, function(){
     animationTransition = false;
   });
-  $("#mask > #static").animate({
+  $('#mask > #static').animate({
     opacity: 1
   }, fadingTime);
 }
 
 function idleToPlay(){
-  $(".info").animate({
+  $('.info').animate({
     opacity: 0
   }, fadingTime);
-  $("#mask > #static").delay(500).animate({
+  $('#mask > #static').delay(500).animate({
     opacity: 0
   }, fadingTime);
 
-  $("body").animate({
-    backgroundColor: "#000"
+  $('body').animate({
+    backgroundColor: '#000'
   }, fadingTime);
 
-  $("#ghost").css("visibility", "visible");
-  $("#ghost").animate({
+  $('#ghost').css('visibility', 'visible');
+  $('#ghost').animate({
     opacity: 1
   }, fadingTime, function(){
     ghostAnimationFinished = true;
     if (audioLoaded && !ghostDistortStarted){
       ghostDistortStarted = true;
-      distortGhost(document.getElementById("ghost"), function(){
+      distortGhost(document.getElementById('ghost'), function(){
         startDrawing(20); //brain alpha waves are 10 pulses per second. Draw double the speed to change bg every half cycle
-        state = "playing";
+        state = 'playing';
         animationTransition = false;
       });
     }
@@ -243,41 +243,41 @@ function idleToPlay(){
 }
 
 function playToPause(){
-  state = "pause";
+  state = 'pause';
   audio.pause();
 
-  $(".info").delay(500).animate({
+  $('.info').delay(500).animate({
     opacity: 1
   }, fadingTime);
 
-  $("#mask > #static").animate({
+  $('#mask > #static').animate({
     opacity: 1
   }, fadingTime);
 
-  $("body").css("backgroundColor", "#000");
-  $("body").animate({
-    backgroundColor: "#686867"
+  $('body').css('backgroundColor', '#000');
+  $('body').animate({
+    backgroundColor: '#686867'
   }, fadingTime, function(){
     animationTransition = false;
   });
 }
 
 function pauseToPlay(){
-  $(".info").animate({
+  $('.info').animate({
     opacity: 0
   }, fadingTime);
-  $("#mask > #static").delay(500).animate({
+  $('#mask > #static').delay(500).animate({
     opacity: 0
   }, fadingTime, function(){
     audio.play();
-    state = "playing";
+    state = 'playing';
     animationTransition = false;
     resetInfoSection();
   });
 
-  $("body").css("backgroundColor", "#686867");
-  $("body").animate({
-    backgroundColor: "#000"
+  $('body').css('backgroundColor', '#686867');
+  $('body').animate({
+    backgroundColor: '#000'
   }, fadingTime);
 }
 
@@ -289,7 +289,7 @@ function transform2d(elt, x1, y1, x2, y2, x3, y3, x4, y4) {
        t[1], t[4], 0, t[7],
        0   , 0   , 1, 0   ,
        t[2], t[5], 0, t[8]];
-  t = "matrix3d(" + t.join(", ") + ")";
+  t = 'matrix3d(' + t.join(', ') + ')';
   // elt.style["-webkit-transform"] = t;
   // elt.style["-moz-transform"] = t;
   // elt.style["-o-transform"] = t;
@@ -304,7 +304,7 @@ function distortGhost(el, callback){
       duration: ghostDistortTime,
       step: function(i, fi) {
 
-          $(el).css("opacity", (1 - i))
+          $(el).css('opacity', (1 - i))
 
           var xTransformFactor = 1.3;
           var yTransformFactor = 1.01;
