@@ -4,12 +4,13 @@ $fg-color: #000;
 
 /* Space out content a bit */
 
-
+html{
+  height: 100%;
+}
 
 html, body {
   background-color: $bg-color;
   width: 100vw;
-  height: 100%;
   padding: 0;
   margin: 0;
 
@@ -20,6 +21,10 @@ html, body {
   font-weight: 400;
   line-height: 17px;
 
+}
+
+body {
+  min-height: 100%;
 }
 
 a, a:visited, a:active{

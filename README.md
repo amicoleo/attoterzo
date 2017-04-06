@@ -32,9 +32,9 @@
   - http://attoterzo.bloodysoundfucktory.com/ -->
 <!-- - Color highlight
   - Cannot highlight text because of clicking everywhere -->
-- Custom domain
-  - https://help.github.com/articles/adding-or-removing-a-custom-domain-for-your-github-pages-site/
-<!-- 
+<!-- - Custom domain
+  - https://help.github.com/articles/adding-or-removing-a-custom-domain-for-your-github-pages-site/ -->
+<!--
 - Testo
   - Pick from gysin
 - Caratteri strani -->
@@ -42,4 +42,4 @@
 
 ### EXTRA
 - Frequency affects color (but keep hi-brightness)
-- Detect beats ()
+- Detect beats
