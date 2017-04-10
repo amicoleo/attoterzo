@@ -239,7 +239,7 @@ function idleToPlay(){
         animationTransition = false;
 
         if('webkitAudioContext' in window) {
-          $("#apologies").css("visibility", "visible");
+          $('#apologies').css('visibility', 'visible');
         }
       });
     }
@@ -266,7 +266,7 @@ function playToPause(){
     animationTransition = false;
 
     if('webkitAudioContext' in window) {
-      $("#apologies").css("visibility", "hidden");
+      $('#apologies').css('visibility', 'hidden');
     }
   });
 }
@@ -284,7 +284,7 @@ function pauseToPlay(){
     resetInfoSection();
 
     if('webkitAudioContext' in window) {
-      $("#apologies").css("visibility", "visible");
+      $('#apologies').css('visibility', 'visible');
     }
   });
 
