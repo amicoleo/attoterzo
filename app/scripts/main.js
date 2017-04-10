@@ -151,22 +151,23 @@ function draw() {
 
 var colorState = false;
 function drawBackground(){
-   var rms = getFrequencyData();
-   var rmsScaled = Math.min(Math.max(rms, minRMS), maxRMS);
-   rmsScaled = (rmsScaled - minRMS)/(maxRMS - minRMS)
 
-   if (debug) console.log('RMS scaled: '+rmsScaled+' - raw: '+rms);
-   var rmsColor = Math.floor(rmsScaled*255);
+  var rms = getFrequencyData();
+  var rmsScaled = Math.min(Math.max(rms, minRMS), maxRMS);
+  rmsScaled = (rmsScaled - minRMS)/(maxRMS - minRMS)
 
-   if (colorState){
-     var currentColor = 'rgb('+rmsColor+','+rmsColor+','+rmsColor+')';
-     var $body = $('body');
-     $body.css('backgroundColor', currentColor);
-   }else{
-     var $body = $('body');
-     $body.css('backgroundColor', 'black');
-   }
-   colorState = !colorState;
+  if (debug) console.log('RMS scaled: '+rmsScaled+' - raw: '+rms);
+  var rmsColor = Math.floor(rmsScaled*255);
+
+  if (colorState){
+    var currentColor = 'rgb('+rmsColor+','+rmsColor+','+rmsColor+')';
+    var $body = $('body');
+    $body.css('backgroundColor', currentColor);
+  }else{
+    var $body = $('body');
+    $body.css('backgroundColor', 'black');
+  }
+  colorState = !colorState;
 
 }
 
@@ -236,6 +237,10 @@ function idleToPlay(){
         startDrawing(20); //brain alpha waves are 10 pulses per second. Draw double the speed to change bg every half cycle
         state = 'playing';
         animationTransition = false;
+
+        if('webkitAudioContext' in window) {
+          $("#apologies").css("visibility", "visible");
+        }
       });
     }
     ghostAnimationFinished = true;
@@ -259,6 +264,10 @@ function playToPause(){
     backgroundColor: '#686867'
   }, fadingTime, function(){
     animationTransition = false;
+
+    if('webkitAudioContext' in window) {
+      $("#apologies").css("visibility", "hidden");
+    }
   });
 }
 
@@ -273,6 +282,10 @@ function pauseToPlay(){
     state = 'playing';
     animationTransition = false;
     resetInfoSection();
+
+    if('webkitAudioContext' in window) {
+      $("#apologies").css("visibility", "visible");
+    }
   });
 
   $('body').css('backgroundColor', '#686867');
