@@ -20,6 +20,7 @@ $(function(){
 $(window).on('load', function(){
   //Setup wrapper height relative to container, to prevent info container to introduce empty space at the bottom of the container
   $('#container-wrapper').height($('#container').outerHeight(true));
+
 })
 
 setupAudio();
@@ -32,7 +33,7 @@ audio.addEventListener('loadeddata', function(){
       ghostDistortStarted = true;
       distortGhost(document.getElementById('ghost'), function(){
         startDrawing(20); //brain alpha waves are 10 pulses per second. Draw double the speed to change bg every half cycle
-        audio.volume = 1;
+        audio.volume = 0;
         state = 'playing';
         animationTransition = false;
       });
@@ -81,6 +82,10 @@ $(document).click(function(event) {
     if (state == 'idle'){
       audio.src = 'Atto3.mp3';
       audio.play();
+      audioFadein(function(){
+        // console.log("Play")
+      });
+
 
       if (infoVisible){
         hideInfoSection(idleToPlay);
@@ -111,6 +116,8 @@ function setupAudio(){
   analyser.connect(audioCtx.destination);
 
   dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+
 
 }
 function getFrequencyData(){
@@ -173,6 +180,28 @@ function drawBackground(){
 
 
 //--------- Utility functions ----------//
+function audioFadeout(callback){
+  $({ i:1 }).animate({ i: 0}, {
+    duration: 500,
+    step: function (i, fi) {
+      audio.volume = i
+      if (i == 0) {
+        callback();
+      }
+    }
+  });
+}
+function audioFadein(callback){
+  $({ i:0 }).animate({ i: 1}, {
+    duration: 500,
+    step: function (i, fi) {
+      audio.volume = i
+      if (i == 1) {
+        callback();
+      }
+    }
+  });
+}
 function resetInfoSection(){
   var newHeight = '20px';
   var newY = 0;
@@ -249,7 +278,11 @@ function idleToPlay(){
 
 function playToPause(){
   state = 'pause';
-  audio.pause();
+
+  audioFadeout(function(){
+      // console.log("Pause")
+      audio.pause();
+  })
 
   $('.info').delay(500).animate({
     opacity: 1
@@ -279,6 +312,10 @@ function pauseToPlay(){
     opacity: 0
   }, fadingTime, function(){
     audio.play();
+    audioFadein(function(){
+      // console.log("Resume")
+    });
+
     state = 'playing';
     animationTransition = false;
     resetInfoSection();
